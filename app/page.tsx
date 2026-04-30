@@ -52,13 +52,18 @@ const pgnFormSchema = z.object({
     }),
 });
 
+// Ruy Lopez: 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6
+// Petroff Defense: 1. e4 e5 2.Nf3 Nf6 
+// Giuco Piano: 1.e4 e5 2.Nf3 Nc6 3.Bc4
+
 export default function Home() {
   const [game, setGame] = useState(new Chess())
   const form = useForm<z.infer<typeof pgnFormSchema>>({
     resolver: zodResolver(pgnFormSchema),
     defaultValues: {
       // pgn:`1. d4 d5 2. c4 dxc4 3. Nc3 g6 4. e4 Nc6 5. Nf3 Bg7 6. d5 Ne5 7. Nxe5 Bxe5 8. Bxc4 Bxc3+ 9. bxc3 c5 10. O-O Nf6 11. e5 Ng4 12. Re1 Qc7 13. d6 Qd7 14. e6 fxe6 15. Qxg4 `,
-      pgn:`1. d4 d5 2. c4 dxc4`,
+      // pgn:`1. d4 d5 2. c4 dxc4 `,
+      pgn:`1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6`,
     },
   });
 
