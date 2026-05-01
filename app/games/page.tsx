@@ -6,15 +6,19 @@ import { getGames } from "@/lib/axios/backendApi";
 import { useQuery } from "@tanstack/react-query";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import { ColumnFiltersState } from "@tanstack/react-table";
 
 export default function Games() {
   const [currentUrl, setCurrentUrl] = useState<string>('');
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["games", currentUrl],
+    queryKey: ["games", currentUrl, columnFilters],
     queryFn: async () => {
-      var res = await getGames(currentUrl || undefined);
-      console.log("queryGame", res);
+      const ecoFilter = columnFilters.find(f => f.id === 'opening')
+      const ecoCode = ecoFilter ? ecoFilter.value : ''
+      const params = { eco_code: ecoCode }
+      var res = await getGames(currentUrl || undefined, params);
       return res;
     },
   });
@@ -31,6 +35,11 @@ export default function Games() {
     }
   };
 
+  function setColumnFiltersHandler(filters: any){
+    setCurrentUrl("")
+    setColumnFilters(filters)
+  }
+
   return (
     <div className="p-4">
       <Card>
@@ -39,8 +48,7 @@ export default function Games() {
         </CardHeader>
 
         {data?.results && (
-          <div className="container mx-auto p-4">
-            
+          <div className="container mx-auto px-4">
             <DataTable 
               columns={columns} 
               data={data} 
@@ -48,6 +56,8 @@ export default function Games() {
               onPrevious={handlePrevious}
               hasNext={!!data.next}
               hasPrevious={!!data.previous}
+              columnFilters={columnFilters}
+              setColumnFilters={setColumnFiltersHandler as any}
             />
           </div>
         )}

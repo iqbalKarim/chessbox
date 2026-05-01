@@ -14,7 +14,8 @@ export interface CursorPaginated<T>{
   results: T[]
 }
 
-export function getGames(url?: string): Promise<CursorPaginated<GameDetail>>{
-  return djangoApi.get(url || "games/");
+export function getGames(url?: string, params?: {}): Promise<CursorPaginated<GameDetail>>{
+  if (url) return djangoApi.get(url, { params });
+  else return djangoApi.get("games/", { params });
 }
 

@@ -12,12 +12,19 @@ interface DataTableProps<TData, TValue> {
   onPrevious: () => void;
   hasNext: boolean;
   hasPrevious: boolean;
+  columnFilters: any, 
+  setColumnFilters: any
 }
 
-export function DataTable<TData, TValue>({ columns, data, onNext, onPrevious, hasNext, hasPrevious }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, onNext, onPrevious, hasNext, hasPrevious, columnFilters, setColumnFilters }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data: data.results,
     columns: columns,
+    state: {
+      columnFilters,
+    },
+    onColumnFiltersChange: setColumnFilters,
+    manualFiltering: true,
     getCoreRowModel: getCoreRowModel(),
   });
 
