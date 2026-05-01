@@ -18,7 +18,7 @@ import {
   SidebarMenuItem,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { ChevronUp, Home, Inbox, User2, ChessQueen } from "lucide-react";
+import { ChevronUp, Home, Inbox, User2, ChessQueen, ChartNetwork } from "lucide-react";
 import Link from "next/link";
 
 // Menu items.
@@ -32,6 +32,11 @@ const items = [
     title: "Games",
     url: "/games",
     icon: ChessQueen,
+  },
+  {
+    title: "Opening Statistics",
+    url: "/opening-statistics",
+    icon: ChartNetwork,
   },
 ];
 

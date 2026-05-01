@@ -16,15 +16,10 @@ import { Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import eco_codes from "./eco_codes.json";
 
-function formatDate(dateString: string): string {
-  try {
-    // Try to parse ISO date format
-    const date = new Date(dateString);
-    return format(date, "MMM dd, yyyy");
-  } catch {
-    return dateString;
-  }
-}
+// Pre-sort eco_codes once at module load time
+const sortedEcoCodes = [...eco_codes].sort((a, b) =>
+  a.eco_code.localeCompare(b.eco_code)
+);
 
 export function formatFuzzyDate(dateString: string): string {
   // Split the string into [year, month, day]
@@ -48,6 +43,7 @@ export function formatFuzzyDate(dateString: string): string {
   // Format to "Sep 04, 2012"
   return format(date, "MMM dd, yyyy");
 }
+
 
 export const columns: ColumnDef<GameDetail>[] = [
   {
@@ -100,7 +96,7 @@ export const columns: ColumnDef<GameDetail>[] = [
               <DropdownMenuLabel>Filter by ECO Code</DropdownMenuLabel>
               <DropdownMenuSeparator />
 
-              {eco_codes.map((opening) => {
+              {sortedEcoCodes.map((opening) => {
                 return (
                   <DropdownMenuItem key={opening.eco_code} onClick={() => column.setFilterValue(opening.eco_code)}>
                     {opening.eco_code}
