@@ -52,9 +52,12 @@ export const columns: ColumnDef<GameDetail>[] = [
     cell: ({ getValue }) => <b>{formatFuzzyDate(getValue() as string)}</b>,
   },
   {
-    accessorKey: "white_player.first_name",
+    accessorKey: "white_player",
     header: "White Player",
-    cell: ({ getValue }) => <b>{getValue() as string}</b>,
+    cell: ({ getValue }) => {
+      const player = getValue() as any
+      return <b>{player.surname}, {player.first_name} </b>
+    },
   },
   {
     accessorKey: "result",
@@ -74,9 +77,12 @@ export const columns: ColumnDef<GameDetail>[] = [
     },
   },
   {
-    accessorKey: "black_player.first_name",
+    accessorKey: "black_player",
     header: "Black Player",
-    cell: ({ getValue }) => <b>{getValue() as string}</b>,
+    cell: ({ getValue }) => {
+      const player = getValue() as any
+      return <b>{player.surname}, {player.first_name} </b>
+    },
   },
   {
     accessorKey: "opening",
