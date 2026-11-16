@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "./ui/button";
-import { getAnalysis, getOpening } from "../lib/api";
+import { getAnalysis, getOpening } from "../lib/axios/api";
 import { Fragment, useEffect, useState } from "react";
 import { Chess } from "chess.js";
 import { Badge } from "./ui/badge";
@@ -56,9 +56,9 @@ export default function AnalysisBox({ pgn, game }: { pgn: string; game: Chess })
     makeRequest();
   }, []);
   function makeRequest() {
-    // getOpening(pgn).then((res) => {
-    //   setOpeningData(res.data as OpeningData);
-    // });
+    getOpening(pgn).then((res) => {
+      setOpeningData(res.data as OpeningData);
+    });
 
     getAnalysis(game.fen()).then((res) => {
       setAnalysisData(res.data);
@@ -76,7 +76,7 @@ export default function AnalysisBox({ pgn, game }: { pgn: string; game: Chess })
         </CardAction>
       </CardHeader>
       <CardContent>
-        {/* <div className="flex">
+        <div className="flex">
           <div className="w-1/2">
             PGN
             <pre
@@ -93,7 +93,7 @@ export default function AnalysisBox({ pgn, game }: { pgn: string; game: Chess })
               {game.fen()}
             </pre>
           </div>
-        </div> */}
+        </div>
 
         {openingData && (
           <>
